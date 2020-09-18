@@ -35,45 +35,28 @@ let myCalendar = function myApp() {
         colorId: 1
     }
     
-    // calendar.freebusy.query(
-    //     {
-    //         resource: {
-    //             timeMin: eventStartTime,
-    //             timeMax: eventEndTime,
-    //             timeZone: 'America/New_York',
-    //             items: [{ id: 'primary'}],
-    //         },
-    //     },
-    //     (err, res) => {
-    //         if(err) return console.error('free busy query error', err)
-    
-    //         const eventsArr = res.data.calendars.primary.busy
-    
-    //         if(eventsArr.length === 0) return calendar.events.insert({calendarId: 'primary', resource: event}, (err)=>{
-    //             if(err) return console.error('calendar event creation error', err)
-    //             return console.log('calendar event created')
-    //         })
-    //         //return console.log('im busy')
-    //     }
-    // )
-    ////////////////
-    var resource = {
-        "summary": "Appointment",
-        "location": "Somewhere",
-        "start": {
-          "dateTime": "2011-12-16T10:00:00.000-07:00"
+    calendar.freebusy.query(
+        {
+            resource: {
+                timeMin: eventStartTime,
+                timeMax: eventEndTime,
+                timeZone: 'America/New_York',
+                items: [{ id: 'primary'}],
+            },
         },
-        "end": {
-          "dateTime": "2011-12-16T10:25:00.000-07:00"
+        (err, res) => {
+            if(err) return console.error('free busy query error', err)
+    
+            const eventsArr = res.data.calendars.primary.busy
+    
+            if(eventsArr.length === 0) return calendar.events.insert({calendarId: 'primary', resource: event}, (err)=>{
+                if(err) return console.error('calendar event creation error', err)
+                return console.log('calendar event created')
+            })
+            //return console.log('im busy')
         }
-      };
-      var request = gapi.client.calendar.events.insert({
-        'calendarId': 'primary',
-        'resource': resource
-      });
-      request.execute(function(resp) {
-        console.log(resp);
-      });
+    )
+    ////////////////
     
 }
 
