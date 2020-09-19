@@ -53,7 +53,7 @@ let myCalendar = function myApp() {
                 if(err) return console.error('calendar event creation error', err)
                 return console.log('calendar event created')
             })
-            //return console.log('im busy')
+            return console.log('im busy')
         }
     )
     ////////////////
